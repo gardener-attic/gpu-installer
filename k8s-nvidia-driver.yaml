@@ -14,7 +14,7 @@ spec:
     spec:
       hostPID: true
       initContainers:
-      - image: squat/modulus:13bb5a54d558ddce0ad2a7702fdd18083f0b4ac7
+      - image: squat/modulus:5c0e39827e98671928b1742d3d194860ed0345e8
         name: modulus
         args:
         - compile
@@ -49,7 +49,7 @@ spec:
         - name: dev
           mountPath: /dev
       containers:
-      - image: "gcr.io/google-containers/pause:3.1"
+      - image: k8s.gcr.io/pause-amd64:3.1
         name: pause
       tolerations:
       - key: "nvidia.com/gpu"
