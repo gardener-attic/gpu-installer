@@ -1,11 +1,10 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: nvidia-gpu-device-plugin
   namespace: kube-system
   labels:
     k8s-app: nvidia-gpu-device-plugin
-    #addonmanager.kubernetes.io/mode: Reconcile
 spec:
   template:
     metadata:
