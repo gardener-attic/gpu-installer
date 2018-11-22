@@ -1,0 +1,84 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: {{ template "nvidia-installer.fullname" . }}
+  namespace: {{ .Values.nvidiaInstaller.namespace }}
+  labels:
+    app: {{ template "nvidia-installer.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  template:
+    metadata:
+      labels:
+        name: {{ template "nvidia-installer.name" . }}
+        k8s-app: {{ template "nvidia-installer.name" . }}
+    spec:
+      hostPID: true
+      initContainers:
+      - image: squat/modulus:5c0e39827e98671928b1742d3d194860ed0345e8
+        name: modulus
+        args:
+        - compile
+        - nvidia
+        - {{ required "nvidia-installer.driverVersion" .Values.nvidiaInstaller.driverVersion | quote }}
+        securityContext:
+          privileged: true
+        env:
+        - name: MODULUS_CHROOT
+          value: "true"
+        - name: MODULUS_INSTALL
+          value: "true"
+        - name: MODULUS_INSTALL_DIR
+          value: {{ required "nvidia-installer.hostDriverPath" .Values.nvidiaInstaller.hostDriverPath }}
+        - name: MODULUS_CACHE_DIR
+          value: /opt/modulus/cache
+        - name: MODULUS_LD_ROOT
+          value: /root
+        volumeMounts:
+        - name: etc-coreos
+          mountPath: /etc/coreos
+          readOnly: true
+        - name: usr-share-coreos
+          mountPath: /usr/share/coreos
+          readOnly: true
+        - name: ld-root
+          mountPath: /root
+        - name: module-cache
+          mountPath: /opt/modulus/cache
+        - name: module-install-dir-base
+          mountPath: {{ required "nvidia-installer.hostDriverPath" .Values.nvidiaInstaller.hostDriverPath }}
+        - name: dev
+          mountPath: /dev
+      containers:
+      - image: k8s.gcr.io/pause-amd64:3.1
+        name: pause
+      tolerations:
+{{- if .Values.nvidiaInstaller.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nvidiaInstaller.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.nvidiaInstaller.tolerations }}
+      tolerations:
+{{ toYaml .Values.nvidiaInstaller.tolerations | indent 6 }}
+{{- end }}
+      volumes:
+      - name: etc-coreos
+        hostPath:
+          path: /etc/coreos
+      - name: usr-share-coreos
+        hostPath:
+          path: /usr/share/coreos
+      - name: ld-root
+        hostPath:
+          path: /
+      - name: module-cache
+        hostPath:
+          path: /opt/modulus/cache
+      - name: dev
+        hostPath:
+          path: /dev
+      - name: module-install-dir-base
+        hostPath:
+          path: {{ required "nvidia-installer.hostDriverPath" .Values.nvidiaInstaller.hostDriverPath }}

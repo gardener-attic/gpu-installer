@@ -1,0 +1,27 @@
+nvidiaInstaller:
+  namespace: kube-system
+  driverVersion: 390.48
+  hostDriverPath: /opt/drivers
+  nodeSelector: {}
+  tolerations:
+   - key: "nvidia.com/gpu"
+     operator: "Exists"
+     effect: "NoSchedule"
+
+nvidiaDevicePlugin:
+  namespace: kube-system
+  hostDevicePluginPath: /var/lib/kubelet/device-plugins
+  nodeSelector: {}
+  tolerations:
+   - key: CriticalAddonsOnly
+     operator: Exists
+   - key: "nvidia.com/gpu"
+     operator: "Exists"
+     effect: "NoSchedule"
+  resources:
+    requests:
+      cpu: 50m
+      memory: 10Mi
+    limits:
+      cpu: 50m
+      memory: 10Mi
