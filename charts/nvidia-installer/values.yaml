@@ -1,0 +1,33 @@
+nvidiaInstaller:
+  namespace: kube-system
+  image: squat/modulus
+  tag: 5c0e39827e98671928b1742d3d194860ed0345e8
+  driverVersion: 390.48
+  hostDriverPath: /opt/drivers
+  nodeSelector: {}
+  tolerations:
+   - key: "nvidia.com/gpu"
+     operator: "Exists"
+     effect: "NoSchedule"
+
+nvidiaDevicePlugin:
+  namespace: kube-system
+  image: k8s.gcr.io/nvidia-gpu-device-plugin@sha256
+  tag: 0842734032018be107fa2490c98156992911e3e1f2a21e059ff0105b07dd8e9e
+  pauseImage: k8s.gcr.io/pause-amd64
+  pauseTag: 3.1
+  hostDevicePluginPath: /var/lib/kubelet/device-plugins
+  nodeSelector: {}
+  tolerations:
+   - key: CriticalAddonsOnly
+     operator: Exists
+   - key: "nvidia.com/gpu"
+     operator: "Exists"
+     effect: "NoSchedule"
+  resources:
+    requests:
+      cpu: 50m
+      memory: 10Mi
+    limits:
+      cpu: 50m
+      memory: 10Mi
