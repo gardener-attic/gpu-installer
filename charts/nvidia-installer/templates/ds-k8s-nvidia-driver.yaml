@@ -52,7 +52,7 @@ spec:
         - name: dev
           mountPath: /dev
       containers:
-      - image: k8s.gcr.io/pause-amd64:3.1
+      - image: {{ printf "%s:%s" .Values.nvidiaInstaller.pauseImage .Values.nvidiaInstaller.pauseTag }}
         name: pause
       tolerations:
 {{- if .Values.nvidiaInstaller.nodeSelector }}
