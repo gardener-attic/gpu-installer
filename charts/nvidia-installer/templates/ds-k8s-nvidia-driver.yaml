@@ -9,6 +9,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  selector:
+    matchLabels:
+      name: {{ template "nvidia-installer.name" . }}
   template:
     metadata:
       labels:
