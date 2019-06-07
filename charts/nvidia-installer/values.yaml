@@ -1,8 +1,8 @@
 nvidiaInstaller:
   namespace: kube-system
   image: squat/modulus
-  tag: 5c0e39827e98671928b1742d3d194860ed0345e8
-  driverVersion: 390.48
+  tag: 4a1799e7aa0143bcbb70d354bab3e419b1f54972
+  driverVersion: 396.18
   hostDriverPath: /opt/drivers
   nodeSelector: {}
   tolerations:
@@ -13,7 +13,7 @@ nvidiaInstaller:
 nvidiaDevicePlugin:
   namespace: kube-system
   image: k8s.gcr.io/nvidia-gpu-device-plugin@sha256
-  tag: 0842734032018be107fa2490c98156992911e3e1f2a21e059ff0105b07dd8e9e
+  tag: 08509a36233c5096bb273a492251a9a5ca28558ab36d74007ca2a9d3f0b61e1d
   pauseImage: k8s.gcr.io/pause-amd64
   pauseTag: 3.1
   hostDevicePluginPath: /var/lib/kubelet/device-plugins
