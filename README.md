@@ -35,10 +35,6 @@ kubectl apply -f https://raw.githubusercontent.com/gardener/gpu-installer/master
 
 ```
 
-# Open Issues
-- [ ] Label GPU nodes and add NodeSelector to daemonset
-
-
 # Acknowledgments & References
 * Build and install NVIDIA driver on CoreOS: https://github.com/squat/modulus
 * Nvidia Device Plugin: https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/device-plugins/nvidia-gpu/daemonset.yaml
