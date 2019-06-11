@@ -20,6 +20,11 @@ spec:
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
+      {{- if .Values.nvidiaDevicePlugin.nodeAffinity }}
+      affinity:
+        nodeAffinity:
+{{  toYaml .Values.nvidiaDevicePlugin.nodeAffinity | indent 10 }}
+      {{- end}}
       priorityClassName: system-node-critical
       volumes:
       - name: device-plugin

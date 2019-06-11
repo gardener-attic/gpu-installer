@@ -18,6 +18,11 @@ spec:
         name: {{ template "nvidia-installer.name" . }}
         k8s-app: {{ template "nvidia-installer.name" . }}
     spec:
+      {{- if .Values.nvidiaInstaller.nodeAffinity }}
+      affinity:
+        nodeAffinity:
+{{ toYaml .Values.nvidiaInstaller.nodeAffinity | indent 10 }}
+      {{- end}}
       hostPID: true
       initContainers:
       - image: {{ printf "%s:%s" .Values.nvidiaInstaller.image .Values.nvidiaInstaller.tag }}
