@@ -44,6 +44,8 @@ spec:
           value: /opt/modulus/cache
         - name: MODULUS_LD_ROOT
           value: /root
+        - name: IGNORE_MISSING_MODULE_SYMVERS
+          value: "1"
         volumeMounts:
         - name: etc-coreos
           mountPath: /etc/coreos
