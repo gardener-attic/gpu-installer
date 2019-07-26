@@ -2,7 +2,7 @@ nvidiaInstaller:
   namespace: kube-system
   image: squat/modulus
   tag: 4a1799e7aa0143bcbb70d354bab3e419b1f54972
-  driverVersion: 396.18
+  driverVersion: 410.104
   hostDriverPath: /opt/drivers
   nodeSelector: {}
   nodeAffinity: {}
