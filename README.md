@@ -12,6 +12,7 @@ Install helm via
 
 ```shell
 helm init --service-account tiller
+kubectl apply -f https://raw.githubusercontent.com/gardener/gpu-installer/master/manifests/helm-service-account.yaml
 ```
 
 Install the provided helm chart
